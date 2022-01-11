@@ -1,2 +1,2 @@
 # proto
-.proto files for huawei datacom products
+.proto files for huawei data communication products.
