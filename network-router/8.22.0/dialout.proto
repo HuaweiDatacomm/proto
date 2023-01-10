@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package dialout;
+
+service Dialout
+{
+  rpc Dialout(stream DialoutArgs) returns(stream DialoutArgs) {};
+}
+
+message DialoutArgs 
+{
+  // Request ID.
+  int64 ReqId = 1;
+
+  // Data carried by the RPC layer, which is described by telemetry.proto.
+  google.protobuf.Any data = 2;
+
+  // (Optional) Request error information
+  string errors = 3;
+}
