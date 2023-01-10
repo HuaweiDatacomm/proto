@@ -1,0 +1,82 @@
+syntax = "proto3";
+package huawei_grpc_ipc;
+
+enum ReqType {
+    REQTYPE_INVALID  = 0;
+    REQTYPE_REQUEST  = 1;
+    REQTYPE_RESPONSE = 2;
+    REQTYPE_NOTIFICATION = 3;
+}
+
+enum OpType {
+    OPTYPE_INVALID  = 0;
+    OPTYPE_CREATE = 1;
+    OPTYPE_DELETE = 2;
+    OPTYPE_MODIFY = 3;
+    OPTYPE_NOTIFY = 4;
+}
+
+enum MsgType {
+    MSGTYPE_INVALID = 0;
+    MSGTYPE_CLIENT_RPC = 1;
+    MSGTYPE_SERVER_RPC = 2;
+    MSGTYPE_RPC_DATA = 3;
+}
+
+message LoginAuthenticate {
+    string user_name = 1;
+    string password = 2;
+    string handle = 3;
+    bytes token = 4;
+}
+
+message SouthMsg {
+    uint32 connect_id = 1;
+    uint32 rpc_id = 2;
+    uint32 trans_num = 3;
+    ReqType req_type = 4;
+    OpType op_type = 5;
+    MsgType msg_type = 6;
+    uint32 vrid = 7;
+    uint32 result = 8;
+    string result_description = 9;
+    LoginAuthenticate login = 10;
+    ClientRpc client_rpc = 11;
+    ServerRpc server_rpc = 12;
+    RpcData rpc_data = 13;
+}
+
+message ClientRpc {
+    string peer_address = 1;
+    uint32 peer_port = 2;
+    string my_address = 3;
+    uint32 my_port = 4;
+    uint32 vpn_index = 5;
+    string vpn_name = 6;
+    uint32 dscp = 7;
+    bool no_tls = 8;
+    string rpc_name = 9;
+    string client_name = 10;
+    uint32 client_id = 11;
+    uint32 compression_type = 12;
+}
+
+message ServerRpc {
+    string peer_address = 1;
+    uint32 peer_port = 2;
+    string my_address = 3;
+    uint32 my_port = 4;
+    uint32 vpn_index = 5;
+    string vpn_name = 6;
+    string rpc_name = 7;
+    bytes rpc_parament = 8;
+    uint32 deadline = 9;
+    uint32 compression_type = 10;
+    uint32 dscp = 11;
+}
+
+message RpcData {
+    bytes data = 1;
+    bool is_over = 2;
+}
+

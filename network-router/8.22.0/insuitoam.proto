@@ -1,0 +1,55 @@
+syntax = "proto3";
+package insuitoam;
+
+message FlowInfo {
+   message FlowEntry {
+      uint32 flow_node_id = 1 [json_name = "flow-node-id"];
+      uint32 flow_mon_id = 2 [json_name = "flow-mon-id"];
+      enum AddrFamily {
+         AddrFamily_ipv4 = 0;
+         AddrFamily_ipv6 = 1;
+      };
+      AddrFamily addr_family = 3 [json_name = "addr-family"];
+      string source_ip = 4 [json_name = "source-ip"];
+      uint32 source_mask = 5 [json_name = "source-mask"];
+      string destination_ip = 6 [json_name = "destination-ip"];
+      uint32 destination_mask = 7 [json_name = "destination-mask"];
+      uint32 source_port = 8 [json_name = "source-port"];
+      uint32 destination_port = 9 [json_name = "destination-port"];
+      uint32 protocol = 10 [json_name = "protocol"];
+      string binding_if_name = 11 [json_name = "binding-if-name"];
+      string vrf = 12 [json_name = "vrf"];
+      uint32 dscp = 13 [json_name = "dscp"];
+   }
+   repeated FlowEntry flow_entry = 1 [json_name = "flow-entry"];
+}
+
+message MeasureReport {
+   message Report {
+      uint32 flow_node_id = 1 [json_name = "flow-node-id"];
+      uint32 flow_mon_id = 2 [json_name = "flow-mon-id"];
+      enum Direction {
+            Direction_ingress = 0;
+            Direction_transInput = 1;
+            Direction_transOutput = 2;
+            Direction_egress = 3;
+      };
+      Direction direction = 3 [json_name = "direction"];
+      string binding_if_name = 4 [json_name = "binding-if-name"];
+      uint32 period_id = 5 [json_name = "period-id"];
+        enum Period {
+            Period_1Sec = 0;
+            Period_10Secs = 1;
+            Period_30Secs = 2;
+            Period_60Secs = 3;
+            Period_300Secs = 4;
+        };
+      Period period = 6 [json_name = "period"];
+      uint64 packet_count = 7 [json_name = "packet-count"];
+      uint64 timestamp_second = 8 [json_name = "timestamp-second"];
+      uint64 timestamp_nano_second = 9 [json_name = "timestamp-nano-second"];
+      string trunk_if_name = 10 [json_name = "trunk-if-name"];
+      uint32 error_info = 11 [json_name = "error-info"];
+   }
+   repeated Report report = 1 [json_name = "report"];
+}
